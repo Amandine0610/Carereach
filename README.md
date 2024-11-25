@@ -41,7 +41,7 @@ Create a .env file in the root of the project
 Add your environment variables (e.g., database credentials, JWT secret, etc.)
 5. **Run the application**:
    npm start
-The app should now be running at http://localhost:3000.
+   The app should now be running at http://localhost:3000.
 
 # Demo 🎥
 Check out the demo video showing the full functionality of the system:
