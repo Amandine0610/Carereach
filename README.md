@@ -30,17 +30,16 @@ CareReach provides a **centralized platform** for:
 To get the project up and running locally, follow these steps:
 
 1. **Clone the repository**:
-   ```bash
    git clone https://github.com/Amandine0610/Carereach.git
 2. **Navigate to the project directory**:
    cd CareReachWebapp
 3. **Install dependencies**:
    npm install
 4. **Set up environment variables**:
-Create a .env file in the root of the project
+Create a .env file in the root of the project.
 Add your environment variables (e.g., database credentials, JWT secret, etc.)
-5. **Run the application**:
-   npm start
+6. **Run the application**:
+   npm start.
    The app should now be running at http://localhost:3000.
 
 # Demo 🎥
