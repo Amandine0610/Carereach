@@ -9,7 +9,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const authRoutes = require('./routes/authRoutes');
-const dashboardRoutes = require('./routes/dashboardRoute');
 const userRoutes = require('./routes/userRoutes'); // User management routes
 const appointmentRoutes = require('./routes/appointmentRoutes'); // Appointment routes
 const adminRoutes = require('./routes/adminRoutes');
