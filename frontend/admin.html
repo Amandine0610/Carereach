@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Dashboard</title>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Tooplate">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="css/tooplate-style.css">
+    <style>
+        .dashboard-container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #9DC740;
+    color: black;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    font-size: 1.5em;
+    margin-top: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: black;
+    text-decoration: none;
+    font-size: 1.1em;
+    display: block;
+    padding: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    background-color: #495057;
+    border-radius: 5px;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: #ffffff;
+    overflow-y: auto;
+}
+
+section {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+section h3 {
+    color: #343a40;
+    font-size: 1.3em;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+a.smoothScroll:hover, .appointment-btn:hover {
+    background-color: #0056b3;
+}
+    </style>
+
+</head>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+
+    <!-- PRE LOADER -->
+    <section class="preloader">
+         <div class="spinner">
+
+              <span class="spinner-rotate"></span>
+              
+         </div>
+    </section>
+
+
+    <!-- HEADER -->
+    <header>
+         <div class="container">
+              <div class="row">
+
+                   <div class="col-md-4 col-sm-5">
+                        <p>Welcome to Care Reach</p>
+                   </div>
+                        
+                   <div class="col-md-8 col-sm-7 text-align-right">
+                        <span class="phone-icon"><i class="fa fa-phone"></i> +250788767536</span>
+                        <span class="date-icon"><i class="fa fa-calendar-plus-o"></i> 6:00 AM - 10:00 PM (Mon-Fri)</span>
+                        <span class="email-icon"><i class="fa fa-envelope-o"></i> <a href="#">carereach@company.com</a></span>
+                   </div>
+
+              </div>
+         </div>
+    </header>
+
+
+    <!-- MENU -->
+    <section class="navbar navbar-default navbar-static-top" role="navigation">
+         <div class="container">
+
+              <div class="navbar-header">
+                   <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon icon-bar"></span>
+                        <span class="icon icon-bar"></span>
+                        <span class="icon icon-bar"></span>
+                   </button>
+
+                   <!-- lOGO TEXT HERE -->
+                   <a href="index.html" class="navbar-brand"><i class="fa fa-stethoscope" aria-hidden="true"></i>CareReach</a>
+              </div>
+
+              <!-- MENU LINKS -->
+              <div class="collapse navbar-collapse">
+                   <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#top" class="smoothScroll">Home</a></li>
+                        <li><a href="#about" class="smoothScroll">About Us</a></li>
+                        <li><a href="#team" class="smoothScroll">Doctors</a></li>
+                        <li><a href="#news" class="smoothScroll">News</a></li>
+                        <li><a href="default_dashboard.html" class="smoothScroll">Dashboard</a></li>
+                        <li><a href="#google-map" class="smoothScroll">Contact</a></li>
+                        <li><a href="signup.html" class="smoothScroll">Signup</a></li>
+                        <li><a href="login.html" class="smoothScroll">Login</a></li>                        
+                        <li><a href="/logout" class="btn btn-danger">Logout</a></li>
+                        <li class="appointment-btn"><a href="appointment.html">Make an appointment</a></li>
+                   </ul>
+              </div>
+
+         </div>
+    </section>
+
+   
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Admin Dashboard</h2>
+            <ul>
+                <li><a href="#user-management">User Management</a></li>
+                <li><a href="#appointments">Appointments</a></li>
+                <li><a href="#reports">Reports</a></li>
+                <li><a href="#analytics">Analytics</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- User Management Section -->
+            <section id="user-management">
+                <h3>User Management</h3>
+                <div id="user-list">
+                    <table id="userTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableBody">
+                            <!-- User rows will be populated here -->
+                        </tbody>
+                    </table>
+                    
+                    <!-- Button to add a user -->
+                    <button id="addUserButton" class="btn btn-primary">Add User</button>
+                    
+                </div>
+            </section>
+
+            <!-- Appointments Section -->
+<section id="appointments">
+    <h3>Appointments</h3>
+    <!-- Add a table for displaying appointments -->
+    <table id="appointments-table" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Appointment ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Appointment Date</th>
+                <th>Appointment Time</th>
+                <th>Department</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table rows will be populated dynamically using JavaScript -->
+        </tbody>
+    </table>
+</section>
+
+
+            <!-- Reports Section -->
+            <section id="reports">
+                <h3>Reports</h3>
+                <button onclick="generateReport()">Generate Report</button>
+                <div id="report-output"></div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics">
+                <h3>Analytics</h3>
+                <div id="analytics-data"></div>
+            </section>
+        </div>
+    </div>
+    <!-- SCRIPTS -->
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const token = localStorage.getItem('token'); // Get token from localStorage
+
+    if (!token) {
+        alert('You are not logged in. Please log in to continue.');
+        window.location.href = './login.html'; // Redirect to login if no token
+        return;
+    }
+
+    fetchAppointments(token); // Pass the token to fetch appointments
+});
+
+// Function to fetch appointments
+function fetchAppointments(token) {
+    fetch('http://localhost:3000/api/appointments', {
+        method: 'GET',
+    headers: {
+            Authorization: `Bearer ${token}`, // Attach token in Authorization header
+        },
+    })
+        .then(response => {
+  if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+  return response.json();
+        })
+        .then(data => {
+            console.log('Appointments:', data);
+            displayAppointments(data); // Display appointments in the table
+        })
+        .catch(error => {
+            console.error('Error fetching appointments:', error);
+            alert('Failed to fetch appointments. Please try again later.');
+        });
+}
+
+// Function to display appointments
+function displayAppointments(appointments) {
+    const tableBody = document.querySelector('#appointments-table tbody');
+    tableBody.innerHTML = ''; // Clear any previous rows
+
+    if (appointments && appointments.length > 0) {
+        appointments.forEach(appointment => {
+            const row = document.createElement('tr');
+
+            // Create table cells
+            const appointmentIdCell = document.createElement('td');
+            appointmentIdCell.textContent = appointment.appointment_id;
+            row.appendChild(appointmentIdCell);
+
+            const nameCell = document.createElement('td');
+            nameCell.textContent = appointment.name;
+            row.appendChild(nameCell);
+
+            const emailCell = document.createElement('td');
+            emailCell.textContent = appointment.email;
+            row.appendChild(emailCell);
+
+            const phoneCell = document.createElement('td');
+            phoneCell.textContent = appointment.phone;
+            row.appendChild(phoneCell);
+
+            const dateCell = document.createElement('td');
+            dateCell.textContent = appointment.appointment_date;
+            row.appendChild(dateCell);
+
+            const timeCell = document.createElement('td');
+            timeCell.textContent = appointment.appointment_time;
+            row.appendChild(timeCell);
+
+            const departmentCell = document.createElement('td');
+            departmentCell.textContent = appointment.department;
+            row.appendChild(departmentCell);
+
+            // Add action buttons (Edit/Delete)
+            const actionCell = document.createElement('td');
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Edit';
+            editButton.classList.add('btn', 'btn-warning', 'btn-sm');
+            editButton.style.backgroundColor = 'green'; // Customize yellow color
+            editButton.style.color = '#fff'; // White text
+            editButton.style.padding = '5px 10px';
+            editButton.style.border = 'none';
+            editButton.style.borderRadius = '5px';
+            editButton.style.cursor = 'pointer';
+            editButton.onclick = () => editAppointment(appointment.appointment_id);
+            actionCell.appendChild(editButton);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
+            deleteButton.style.backgroundColor = 'red'; // Customize yellow color
+            deleteButton.style.color = '#fff'; // White text
+            deleteButton.style.padding = '5px 10px';
+            deleteButton.style.border = 'none';
+            deleteButton.style.borderRadius = '5px';
+            deleteButton.style.cursor = 'pointer';
+            deleteButton.onclick = () => deleteAppointment(appointment.appointment_id);
+            actionCell.appendChild(deleteButton);
+
+            row.appendChild(actionCell);
+            tableBody.appendChild(row);
+
+        });
+    } else {
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.colSpan = 8;
+        cell.textContent = 'No appointments available.';
+        row.appendChild(cell);
+        tableBody.appendChild(row);
+    }
+}
+
+// Fetch and display users
+const fetchUsers = async () => {
+    try {
+        const token = localStorage.getItem('token'); // Get the token from localStorage
+
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        const response = await fetch('http://localhost:3000/api/users', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}` // Include token in the header
+            }
+        });
+
+        if (response.status === 403) {
+            throw new Error('Forbidden: You do not have permission to access this resource');
+        }
+
+        const users = await response.json();  // Assuming response is a JSON array of users
+        const userTableBody = document.getElementById('userTableBody');
+        userTableBody.innerHTML = ''; // Clear previous content
+
+        if (Array.isArray(users)) {
+    users.forEach(user => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${user.id}</td>
+        <td>${user.name}</td>
+        <td>${user.email}</td>
+        <td>${user.role}</td>
+        <td>
+                    <button class="edit-btn" data-id="${user.id}" style="background-color: green; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Edit</button>
+                    <button class="delete-btn" data-id="${user.id}" style="background-color: red; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Delete</button>
+        </td>
+      `;
+                userTableBody.appendChild(row);
+    });
+        } else {
+            throw new Error('Invalid response format');
+        }
+
+    } catch (error) {
+        console.error('Error fetching users:', error);
+  }
+};
+
+// Call the function to fetch users when the page loads
+window.onload = fetchUsers;
+function deleteUser(userId) {
+    if (confirm('Are you sure you want to delete this user?')) {
+        fetch(`/api/users/${userId}`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to delete user');
+                }
+                alert('User deleted successfully');
+                fetchUsers(); // Refresh the user list
+            })
+            .catch(error => {
+                console.error('Error deleting user:', error);
+                alert('Error deleting user');
+            });
+  }
+}
+function updateUser(userId) {
+    const name = prompt('Enter new name:');
+    const email = prompt('Enter new email:');
+    const role = prompt('Enter new role:');
+
+    if (name && email && role) {
+        fetch(`/api/users/${userId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, role }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to edit user');
+    }
+                alert('User updated successfully');
+                fetchUsers(); // Refresh the user list
+            })
+            .catch(error => {
+                console.error('Error editing user:', error);
+                alert('Error editing user');
+            });
+    }
+}
+document.getElementById('addUserButton').addEventListener('click', () => {
+    window.location.href = './signup.html'; // Adjust the path to your signup page
+});
+
+    </script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/smoothscroll.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/custom.js"></script>
+</body>
+</html>

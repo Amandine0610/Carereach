@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <title>CareReach - Login></title>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="Tooplate">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/font-awesome.min.css">
+     <link rel="stylesheet" href="css/animate.css">
+     <link rel="stylesheet" href="css/owl.carousel.css">
+     <link rel="stylesheet" href="css/owl.theme.default.min.css">
+     <link rel="stylesheet" href="css/tooplate-style.css">
+
+     <style>
+         body {
+             /* Make sure the body has a height to allow scrolling */
+             height: 200vh; /* Adjust this as needed */
+             overflow: hidden; /* Prevent scrolling on the body */
+             background-image: url('images/slider1.jpg');
+         }
+
+         /* Full height overlay */
+         .overlay {
+             position: absolute; /* Change to absolute */
+             top: 0; /* Start from the top */
+             left: 0; /* Start from the left */
+             width: 100%; /* Full width */
+             height: 100%; /* Full height */
+             
+             background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+             display: flex; /* Flexbox for centering */
+             align-items: center; /* Vertical center */
+             justify-content: center; /* Horizontal center */
+             z-index: 1000; /* Ensure it appears above other content */
+         }
+
+         .card {
+             background-color: #9DC740; /* Card background */
+             padding: 20px; /* Padding inside the card */
+             border-radius: 10px; /* Rounded corners */
+             width: 100%; /* Full width */
+             max-width: 400px; /* Maximum width of the card */
+         }
+
+         /* Optional: styling for text color */
+         .text-white {
+             color: #fff; /* White text */
+         }
+     </style>
+</head>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+
+     <!-- PRE LOADER -->
+     <section class="preloader">
+          <div class="spinner">
+               <span class="spinner-rotate"></span>
+          </div>
+     </section>
+
+     <!-- HEADER -->
+     <header>
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-4 col-sm-5">
+                         <p>Welcome to Care Reach</p>
+                    </div>
+                    <div class="col-md-8 col-sm-7 text-align-right">
+                         <span class="phone-icon"><i class="fa fa-phone"></i> +250788767536</span>
+                         <span class="date-icon"><i class="fa fa-calendar-plus-o"></i> 6:00 AM - 10:00 PM (Mon-Fri)</span>
+                         <span class="email-icon"><i class="fa fa-envelope-o"></i> <a href="#">carereach@company.com</a></span>
+                    </div>
+               </div>
+          </div>
+     </header>
+
+     <!-- MENU -->
+     <section class="navbar navbar-default navbar-static-top" role="navigation">
+          <div class="container">
+               <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                    </button>
+                    <a href="index.html" class="navbar-brand"><i class="fa fa-stethoscope" aria-hidden="true"></i>CareReach</a>
+               </div>
+
+               <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                         <li><a href="index.html" class="smoothScroll">Home</a></li>
+                         <li><a href="index.html#about" class="smoothScroll">About Us</a></li>
+                         <li><a href="index.html#team" class="smoothScroll">Doctors</a></li>
+                         <li><a href="index.html#news" class="smoothScroll">News</a></li>
+                         <li><a href="index.html#google-map" class="smoothScroll">Contact</a></li>
+                         <li><a href="login.html" class="smoothScroll">Login</a></li>
+                         <li><a href="signup.html" class="smoothScroll">Signup</a></li>
+                         <li class="appointment-btn"><a href="appointment.html">Make an appointment</a></li>
+                    </ul>
+               </div>
+          </div>
+     </section>
+
+     <!-- Background Cover and Login Form -->
+     <div class="overlay">
+         <div class="card animate__animated animate__fadeInUp">
+             <h2 class="text-center mb-4">Signin</h2>
+             <form id="loginForm" action="/auth/login" method="POST">
+                 <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                 </div>
+                 <div class="form-group">
+                     <label for="password">Password</label>
+                     <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                 </div>
+                 <div class="form-group text-center">
+                     <button type="submit" class="btn btn-primary">Login</button>
+                 </div>
+                 <div class="d-flex justify-content-between">
+                     <a href="#" class="text-white">Forgot Password?</a>
+                     <a href="signup.html" class="text-white">Sign Up</a>
+                 </div>
+             </form>
+         </div>
+     </div>
+
+     <!-- SCRIPTS -->
+     <script>
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault(); // Prevent form submission
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    try {
+        const response = await fetch('http://localhost:3000/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to login. Please check your credentials.');
+        }
+
+        const data = await response.json();
+        localStorage.setItem('token', data.token); // Save token to localStorage
+        alert('Login successful!');
+        window.location.href = './admin.html'; // Redirect to admin page
+    } catch (error) {
+        console.error('Login error:', error.message);
+        alert('Login failed. Please try again.');
+    }
+});
+
+          </script>
+          
+     <script src="js/jquery.js"></script>
+     <script src="js/bootstrap.min.js"></script>
+     <script src="js/jquery.sticky.js"></script>
+     <script src="js/jquery.stellar.min.js"></script>
+     <script src="js/wow.min.js"></script>
+     <script src="js/smoothscroll.js"></script>
+     <script src="js/owl.carousel.min.js"></script>
+     <script src="js/custom.js"></script>
+</body>
+</html>

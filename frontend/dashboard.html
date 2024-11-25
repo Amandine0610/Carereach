@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CareReach Dashboard</title>
+    <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="Tooplate">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/font-awesome.min.css">
+     <link rel="stylesheet" href="css/animate.css">
+     <link rel="stylesheet" href="css/owl.carousel.css">
+     <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+     <!-- MAIN CSS -->
+     <link rel="stylesheet" href="css/tooplate-style.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background */
+        }
+        .role-heading {
+            margin-top: 20px; /* Space for headings */
+        }
+    </style>
+</head>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+
+    <!-- PRE LOADER -->
+    <section class="preloader">
+         <div class="spinner">
+
+              <span class="spinner-rotate"></span>
+              
+         </div>
+    </section>
+
+
+    <!-- HEADER -->
+    <header>
+         <div class="container">
+              <div class="row">
+
+                   <div class="col-md-4 col-sm-5">
+                        <p>Welcome to Care Reach</p>
+                   </div>
+                        
+                   <div class="col-md-8 col-sm-7 text-align-right">
+                        <span class="phone-icon"><i class="fa fa-phone"></i> +250788767536</span>
+                        <span class="date-icon"><i class="fa fa-calendar-plus-o"></i> 6:00 AM - 10:00 PM (Mon-Fri)</span>
+                        <span class="email-icon"><i class="fa fa-envelope-o"></i> <a href="#">carereach@company.com</a></span>
+                   </div>
+
+              </div>
+         </div>
+    </header>
+
+
+    <!-- MENU -->
+    <section class="navbar navbar-default navbar-static-top" role="navigation">
+         <div class="container">
+
+              <div class="navbar-header">
+                   <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon icon-bar"></span>
+                        <span class="icon icon-bar"></span>
+                        <span class="icon icon-bar"></span>
+                   </button>
+
+                   <!-- lOGO TEXT HERE -->
+                   <a href="index.html" class="navbar-brand"><i class="fa fa-stethoscope" aria-hidden="true"></i>CareReach</a>
+              </div>
+
+              <!-- MENU LINKS -->
+              <div class="collapse navbar-collapse">
+                   <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#top" class="smoothScroll">Home</a></li>
+                        <li><a href="#about" class="smoothScroll">About Us</a></li>
+                        <li><a href="#team" class="smoothScroll">Doctors</a></li>
+                        <li><a href="#news" class="smoothScroll">News</a></li>
+                        <li><a href="#google-map" class="smoothScroll">Contact</a></li>
+                        <li><a href="login.html" class="smoothScroll">Login</a></li>
+                        <li><a href="signup.html" class="smoothScroll">Signup</a></li>
+                        <li class="appointment-btn"><a href="appointment.html">Make an appointment</a></li>
+                   </ul>
+              </div>
+
+         </div>
+    </section>
+    <div class="container">
+        <h2>Welcome, <span id="userName"></span></h2>
+        <p>Role: <span id="userRole">[User Role]</span></p>
+
+        <div id="adminView" class="role-view">
+            <h3 class="role-heading">Admin Dashboard</h3>
+            <a href="/manage-users" class="btn btn-info" style="background-color: #9DC740 ;">Manage Users</a>
+            <a href="/reports" class="btn btn-info" style="background-color: #9DC740;">View Reports</a>
+        </div>
+
+        <div id="doctorView" class="role-view" style="display: none;">
+            <h3 class="role-heading">Doctor Dashboard</h3>
+            <a href="/patients" class="btn btn-info">Patient Management</a>
+            <a href="/appointments" class="btn btn-info">Manage Appointments</a>
+        </div>
+
+        <div id="patientView" class="role-view" style="display: none;">
+            <h3 class="role-heading">Patient Dashboard</h3>
+            <a href="/appointments" class="btn btn-info">View Appointments</a>
+            <a href="/records" class="btn btn-info">View Health Records</a>
+        </div>
+    </div>
+
+    <script>
+        // Sample user data (you should replace this with your actual user session data)
+        
+
+        document.getElementById("userName").textContent = user.name;
+        document.getElementById("userRole").textContent = user.role;
+
+        // Show the appropriate dashboard section based on the user role
+        if (user.role === "admin") {
+            document.getElementById("adminView").style.display = "block";
+        } else if (user.role === "doctor") {
+            document.getElementById("doctorView").style.display = "block";
+        } else if (user.role === "patient") {
+            document.getElementById("patientView").style.display = "block";
+        }
+    </script>
+
+    <!-- Include Bootstrap JS and dependencies -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/smoothscroll.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/custom.js"></script>
+</body>
+</html>
