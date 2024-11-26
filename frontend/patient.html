@@ -221,27 +221,6 @@ a.smoothScroll:hover, .appointment-btn:hover {
 
    <!-- SCRIPTS -->
    <script>
-    // Mock data for the dashboard
-    const appointments = [
-        { id: 1, date: '2024-11-15', time: '10:00 AM', doctor: 'Dr. Smith' },
-        { id: 2, date: '2024-11-20', time: '2:00 PM', doctor: 'Dr. Johnson' },
-    ];
-
-    const medicalRecords = [
-        { id: 1, title: 'Blood Test Results', date: '2024-10-12', details: 'Normal levels' },
-        { id: 2, title: 'X-Ray', date: '2024-09-25', details: 'No issues detected' },
-    ];
-
-    const consultations = [
-        { id: 1, date: '2024-09-10', doctor: 'Dr. Wilson', notes: 'Follow-up required in 2 weeks' },
-        { id: 2, date: '2024-08-20', doctor: 'Dr. Johnson', notes: 'Prescribed medication' },
-    ];
-
-    const messages = [
-        { from: 'Dr. Smith', date: '2024-10-10', content: 'Please update your recent test results.' },
-        { from: 'Dr. Johnson', date: '2024-09-15', content: 'Don’t forget to take your medication.' },
-    ];
-
     // Load Appointments
     function loadAppointments() {
         const appointmentList = document.getElementById('appointment-list');
