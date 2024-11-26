@@ -1,7 +1,7 @@
 // adminController.js
 const pool = require('../config/db'); // Database connection
 
-// Get all appointments
+// Appointment-related functions
 const getAppointments = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM appointments');
@@ -12,7 +12,6 @@ const getAppointments = async (req, res) => {
     }
 };
 
-// Create a new appointment
 const createAppointment = async (req, res) => {
     const { name, email, phone, appointment_date, appointment_time, department } = req.body;
     try {
@@ -27,7 +26,6 @@ const createAppointment = async (req, res) => {
     }
 };
 
-// Update an existing appointment
 const updateAppointment = async (req, res) => {
     const { id } = req.params;
     const { name, email, phone, appointment_date, appointment_time, department } = req.body;
@@ -46,7 +44,6 @@ const updateAppointment = async (req, res) => {
     }
 };
 
-// Delete an appointment
 const deleteAppointment = async (req, res) => {
     const { id } = req.params;
     try {
@@ -61,7 +58,7 @@ const deleteAppointment = async (req, res) => {
     }
 };
 
-// Get all users
+// User-related functions
 const getUsers = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM users');
@@ -71,7 +68,6 @@ const getUsers = async (req, res) => {
     }
 };
 
-// Create a new user
 const createUser = async (req, res) => {
     const { email, password, name, role } = req.body;
     try {
@@ -85,7 +81,6 @@ const createUser = async (req, res) => {
     }
 };
 
-// Update an existing user
 const updateUser = async (req, res) => {
     const { id } = req.params;
     const { email, password, name, role } = req.body;
@@ -100,7 +95,6 @@ const updateUser = async (req, res) => {
     }
 };
 
-// Delete a user
 const deleteUser = async (req, res) => {
     const { id } = req.params;
     try {
@@ -111,13 +105,17 @@ const deleteUser = async (req, res) => {
     }
 };
 
+// Single module.exports combining both appointment and user functions
 module.exports = {
+    // Appointment-related exports
     getAppointments,
     createAppointment,
     updateAppointment,
     deleteAppointment,
+    
+    // User-related exports
     getUsers,
     createUser,
     updateUser,
-    deleteUser,
+    deleteUser
 };

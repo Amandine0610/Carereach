@@ -4,11 +4,8 @@ const {
     createAppointment,
     updateAppointment,
     deleteAppointment,
-    getUsers,
-    createUser,
-    updateUser,
-    deleteUser
 } = require('../controllers/adminController'); // Adjust the path if needed
+const { getUsers, createUser, updateUser, deleteUser } = require('../controllers/adminController'); // Adjust the path if needed
 const router = express.Router();
 
 // GET all appointments

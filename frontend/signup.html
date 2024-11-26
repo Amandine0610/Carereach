@@ -138,43 +138,43 @@
        <script>
         document.addEventListener('DOMContentLoaded', function() {
         const form = document.querySelector('form');
+    
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
         
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = {
-                name: document.getElementById('name').value.trim(),
-                email: document.getElementById('email').value.trim(),
-                password: document.getElementById('password').value,
-                role: document.getElementById('role').value
-            };
+        // Get form data
+        const formData = {
+            name: document.getElementById('name').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            password: document.getElementById('password').value,
+            role: document.getElementById('role').value
+        };
 
-            try {
-                const response = await fetch('/auth/signup', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
-                });
+        try {
+            const response = await fetch('/auth/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
 
-                const data = await response.json();
+            const data = await response.json();
 
-                if (response.ok) {
-                    // Signup successful
-                    alert('Signup successful! You can now login.');
-                    window.location.href = '/login.html'; // Redirect to login page
-                } else {
-                    // Signup failed
-                    alert(data.error || 'Signup failed. Please try again.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again later.');
+            if (response.ok) {
+                // Signup successful
+                alert('Signup successful! You can now login.');
+                window.location.href = '/login.html'; // Redirect to login page
+            } else {
+                // Signup failed
+                alert(data.error || 'Signup failed. Please try again.');
             }
-        });
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again later.');
+        }
     });
+});
         </script>
        <script src="js/jquery.js"></script>
        <script src="js/bootstrap.min.js"></script>

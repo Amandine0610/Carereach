@@ -3,111 +3,61 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const session = require('express-session');
-const { connect } = require('./config/db');
-
-connect()
-    .then(() => console.log('Database connection successful'))
-    .catch(err => console.error('Connection error', err.stack));
-
+const dotenv = require('dotenv');
 
 // Load environment variables
-const dotenv = require('dotenv');
 dotenv.config();
 
-
+// Import routes
 const authRoutes = require('./routes/authRoutes');
-const userRoutes = require('./routes/userRoutes'); // User management routes
-const appointmentRoutes = require('./routes/appointmentRoutes'); // Appointment routes
+const userRoutes = require('./routes/userRoutes');
+const appointmentRoutes = require('./routes/appointmentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
-const patientRoutes = require('./routes/patientsRoute'); // Import patient routes
-const pcpRoutes = require('./routes/pcpRoutes');
-const referralRoutes = require('./routes/referralRoute');
-const { authenticateJWT } = require('./middleware/authMiddleware');
+
+// Import middleware
+const { authenticateJWT, authorize } = require('./middleware/authMiddleware');
+
 // Initialize the app
 const app = express();
 
-// Enable CORS
+// Middleware setup
 app.use(cors());
-
-// Middleware for parsing JSON and serving static files
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // For URL-encoded form data
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'frontend')));
 
-// Session setup (if required by any non-JWT logic)
+// Session setup
 app.use(session({
     secret: process.env.SESSION_SECRET || 'fallback-secret',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: process.env.NODE_ENV === 'production' } // Use secure cookies in production
+    cookie: { 
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }
 }));
 
-// Route setup
-app.use('/auth', authRoutes); // Authentication routes
-app.use('/admin', authenticateJWT, userRoutes); // Protected user management routes
-app.use('/appointments', appointmentRoutes);// Appointment routes
-app.use('/api', authenticateJWT, adminRoutes);
-// Temporary in-app appointment creation logic
-app.post('/appointments/submit-appointment', (req, res) => {
-    const { name, email, phone, appointment_date, appointment_time, department } = req.body;
-    
-    // Simulate database logic
-    console.log(req.body);
+// Route setup with middleware
+app.use('/auth', authRoutes);                     // Authentication routes
+app.use('/admin', authenticateJWT, adminRoutes);  // Protected admin routes
+app.use('/appointments', authenticateJWT, appointmentRoutes); // Protected appointment routes
+app.use('/users', authenticateJWT, userRoutes);   // Protected user routes
 
-    res.status(201).json({
-        message: 'Appointment created successfully!',
-        appointment: {
-        name,
-        email,
-        phone,
-        appointment_date,
-        appointment_time,
-        department,
-        },
+// Centralized error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+        message: 'Something went wrong!',
+        error: process.env.NODE_ENV === 'development' ? err.message : {}
     });
 });
-// Fetch all appointments
-app.get('/api/appointments', async (req, res) => {
-    try {
-        // Make sure db.query returns a promise
-        const result = await db.query('SELECT * FROM appointments'); // Adjust query as per your database
-        res.json(result.rows); 
-    } catch (error) {
-        console.error('Error fetching appointments:', error);
-        res.status(500).send('Error retrieving appointments');
-    }
+
+// 404 handler
+app.use((req, res, next) => {
+    res.status(404).json({
+        message: 'Route not found'
+    });
 });
 
-// Update an appointment (e.g., mark as completed)
-app.put('/api/appointments/:id', async (req, res) => {
-    try {
-        const appointment = await Appointment.findByPk(req.params.id);
-        if (!appointment) {
-            return res.status(404).send('Appointment not found');
-        }
-
-        const updatedAppointment = await appointment.update(req.body);
-        res.json(updatedAppointment);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error updating appointment');
-    }
-});
-
-// Delete an appointment
-app.delete('/api/appointments/:id', async (req, res) => {
-    try {
-        const appointment = await Appointment.findByPk(req.params.id);
-        if (!appointment) {
-            return res.status(404).send('Appointment not found');
-        }
-
-        await appointment.destroy();
-        res.send('Appointment deleted successfully');
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error deleting appointment');
-    }
-});
 // Export the app for server configuration
 module.exports = app;
