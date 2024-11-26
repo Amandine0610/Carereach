@@ -1,5 +1,5 @@
 const { Pool } = require('pg'); // PostgreSQL client
-const bcrypt = require('bcryptjs'); // For password hashing
+const bcrypt = require('bcrypt'); // For password hashing
 
 const pool = new Pool({
     user: 'postgres',

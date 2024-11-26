@@ -4,7 +4,7 @@ const pool = require('../config/db');
 const { authenticateJWT } = require('../middleware/authMiddleware');
 const { getUsers, createUser, updateUser, deleteUser } = require('../controllers/adminController'); // Adjust the path if needed
 const router = express.Router();
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 // User Registration
 router.post('/register', async (req, res) => { 
