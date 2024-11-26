@@ -1,7 +1,7 @@
 // userRoutes.js
 const express = require('express');
 const pool = require('../config/db');
-const authenticateJWT = require('../middleware/authMiddleware');
+const { authenticateJWT } = require('../middleware/authMiddleware');
 const { getUsers, createUser, updateUser, deleteUser } = require('../controllers/adminController'); // Adjust the path if needed
 const router = express.Router();
 const bcrypt = require('bcrypt');
@@ -52,11 +52,6 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-console.log('authenticateJWT:', authenticateJWT); // Should be a function
-console.log('pool:', pool); // Should be an object
-// Incorrect: Trying to access req.user without req being defined
-console.log('req.user:', req.user); 
-
 
 // Get User Profile
 router.get('/profile', authenticateJWT, async (req, res) => {    

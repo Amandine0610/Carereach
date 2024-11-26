@@ -3,10 +3,17 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const session = require('express-session');
-const dotenv = require('dotenv');
+const { connect } = require('./config/db');
+
+connect()
+    .then(() => console.log('Database connection successful'))
+    .catch(err => console.error('Connection error', err.stack));
+
 
 // Load environment variables
+const dotenv = require('dotenv');
 dotenv.config();
+
 
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes'); // User management routes
@@ -37,41 +44,58 @@ app.use(session({
 
 // Route setup
 app.use('/auth', authRoutes); // Authentication routes
-app.use('/dashboard', dashboardRoutes); // Dashboard routes
 app.use('/admin', authenticateJWT, userRoutes); // Protected user management routes
 app.use('/appointments', appointmentRoutes);// Appointment routes
 app.use('/api', authenticateJWT, adminRoutes);
-app.use('/api/patients', patientRoutes);
-app.use('/api/pcp', pcpRoutes);
-app.use('/api/referral', referralRoutes);
-
-// Handle appointment submission
+// Temporary in-app appointment creation logic
 app.post('/appointments/submit-appointment', (req, res) => {
     const { name, email, phone, appointment_date, appointment_time, department } = req.body;
     
-    // Basic validation
-    if (!name || !email || !phone || !appointment_date || !appointment_time || !department) {
-        return res.status(400).json({ message: 'All fields are required' });
-    }
+    // Simulate database logic
+    console.log(req.body);
 
-    // Store appointment (replace with DB in production)
-    const newAppointment = {
-        id: appointments.length + 1,
+    res.status(201).json({
+        message: 'Appointment created successfully!',
+        appointment: {
         name,
         email,
         phone,
         appointment_date,
         appointment_time,
         department,
-    };
-
-    appointments.push(newAppointment);
-    return res.status(200).json({ message: 'Appointment successfully submitted!' });
+        },
+    });
+});
+// Fetch all appointments
+app.get('/api/appointments', async (req, res) => {
+    try {
+        // Make sure db.query returns a promise
+        const result = await db.query('SELECT * FROM appointments'); // Adjust query as per your database
+        res.json(result.rows); 
+    } catch (error) {
+        console.error('Error fetching appointments:', error);
+        res.status(500).send('Error retrieving appointments');
+    }
 });
 
+// Update an appointment (e.g., mark as completed)
+app.put('/api/appointments/:id', async (req, res) => {
+    try {
+        const appointment = await Appointment.findByPk(req.params.id);
+        if (!appointment) {
+            return res.status(404).send('Appointment not found');
+        }
+
+        const updatedAppointment = await appointment.update(req.body);
+        res.json(updatedAppointment);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error updating appointment');
+    }
+});
 
 // Delete an appointment
-app.delete('/appointments/:id', async (req, res) => {
+app.delete('/api/appointments/:id', async (req, res) => {
     try {
         const appointment = await Appointment.findByPk(req.params.id);
         if (!appointment) {
@@ -85,6 +109,5 @@ app.delete('/appointments/:id', async (req, res) => {
         res.status(500).send('Error deleting appointment');
     }
 });
-
 // Export the app for server configuration
 module.exports = app;

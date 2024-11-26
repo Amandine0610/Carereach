@@ -219,21 +219,88 @@ a.smoothScroll:hover, .appointment-btn:hover {
     </div>
 
    <!-- SCRIPTS -->
-    <script src="js/patientDashboard.js"> </script>
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
-    <script src="js/jquery.stellar.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script
+   <script>
+    // Mock data for the dashboard
+    const appointments = [
+        { id: 1, date: '2024-11-15', time: '10:00 AM', doctor: 'Dr. Smith' },
+        { id: 2, date: '2024-11-20', time: '2:00 PM', doctor: 'Dr. Johnson' },
+    ];
 
+    const medicalRecords = [
+        { id: 1, title: 'Blood Test Results', date: '2024-10-12', details: 'Normal levels' },
+        { id: 2, title: 'X-Ray', date: '2024-09-25', details: 'No issues detected' },
+    ];
 
+    const consultations = [
+        { id: 1, date: '2024-09-10', doctor: 'Dr. Wilson', notes: 'Follow-up required in 2 weeks' },
+        { id: 2, date: '2024-08-20', doctor: 'Dr. Johnson', notes: 'Prescribed medication' },
+    ];
 
+    const messages = [
+        { from: 'Dr. Smith', date: '2024-10-10', content: 'Please update your recent test results.' },
+        { from: 'Dr. Johnson', date: '2024-09-15', content: 'Don’t forget to take your medication.' },
+    ];
 
+    // Load Appointments
+    function loadAppointments() {
+        const appointmentList = document.getElementById('appointment-list');
+        appointmentList.innerHTML = '';
 
+        appointments.forEach((appt) => {
+            const apptItem = document.createElement('p');
+            apptItem.textContent = `${appt.date} at ${appt.time} with ${appt.doctor}`;
+            appointmentList.appendChild(apptItem);
+        });
+    }
 
+    // Schedule Appointment
+    function scheduleAppointment() {
+        alert('Functionality to schedule an appointment is under development.');
+    }
 
+    // Load Medical Records
+    function loadMedicalRecords() {
+        const recordsList = document.getElementById('records-list');
+        recordsList.innerHTML = '';
 
+        medicalRecords.forEach((record) => {
+            const recordItem = document.createElement('p');
+            recordItem.textContent = `${record.date}: ${record.title} - ${record.details}`;
+            recordsList.appendChild(recordItem);
+        });
+    }
 
+    // Load Consultations
+    function loadConsultations() {
+        const consultationHistory = document.getElementById('consultation-history');
+        consultationHistory.innerHTML = '';
+
+        consultations.forEach((consult) => {
+            const consultItem = document.createElement('p');
+            consultItem.textContent = `${consult.date} with ${consult.doctor} - ${consult.notes}`;
+            consultationHistory.appendChild(consultItem);
+        });
+    }
+
+    // Load Messages
+    function loadMessages() {
+        const messageList = document.getElementById('message-list');
+        messageList.innerHTML = '';
+
+        messages.forEach((msg) => {
+            const msgItem = document.createElement('p');
+            msgItem.textContent = `From: ${msg.from} on ${msg.date} - ${msg.content}`;
+            messageList.appendChild(msgItem);
+        });
+    }
+
+    // Load all data when the page is loaded
+    window.onload = () => {
+        loadAppointments();
+        loadMedicalRecords();
+        loadConsultations();
+        loadMessages();
+    };
 </script>
 
    <script src="js/jquery.js"></script>
