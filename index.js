@@ -12,7 +12,7 @@ app.use(express.json());
 
 // Default route to test server
 app.get('/', (req, res) => {
-    res.send('CareReach API is running');
+    res.send('CareReach is running');
 });
 
 const PORT = process.env.PORT || 5000;
