@@ -4,7 +4,7 @@ const pool = require('../config/db'); // Database connection
 // Appointment-related functions
 const getAppointments = async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM appointments');
+        const result = await pool.query('SELECT * FROM Appointments');
         res.status(200).json(result.rows);
     } catch (error) {
         console.error('Error fetching appointments:', error);
@@ -13,11 +13,11 @@ const getAppointments = async (req, res) => {
 };
 
 const createAppointment = async (req, res) => {
-    const { name, email, phone, appointment_date, appointment_time, department } = req.body;
+    const { name, email, phone, appointmentDate, appointmentTime, department, userId } = req.body;
     try {
         await pool.query(
-            'INSERT INTO appointments (name, email, phone, appointment_date, appointment_time, department) VALUES ($1, $2, $3, $4, $5, $6)',
-            [name, email, phone, appointment_date, appointment_time, department]
+            'INSERT INTO Appointments (userId, name, email, phone, "appointmentDate", "appointmentTime", department) VALUES ($1, $2, $3, $4, $5, $6)' 
+            [userId, name, email, phone, appointmentDate, appointmentTime, department]
         );
         res.status(201).json({ message: 'Appointment created successfully' });
     } catch (error) {
@@ -28,11 +28,11 @@ const createAppointment = async (req, res) => {
 
 const updateAppointment = async (req, res) => {
     const { id } = req.params;
-    const { name, email, phone, appointment_date, appointment_time, department } = req.body;
+    const { name, email, phone, appointmentDate, appointmentTime, department } = req.body;
     try {
         const result = await pool.query(
-            'UPDATE appointments SET name = $1, email = $2, phone = $3, appointment_date = $4, appointment_time = $5, department = $6 WHERE appointment_id = $7',
-            [name, email, phone, appointment_date, appointment_time, department, id]
+            'UPDATE Appointments SET name = $1, email = $2, phone = $3, appointmentDate = $4, appointmentTime = $5, department = $6 WHERE appointment_id = $7',
+            [name, email, phone, appointmentDate, appointmentTime, department, id]
         );
         if (result.rowCount === 0) {
             return res.status(404).json({ error: 'Appointment not found' });

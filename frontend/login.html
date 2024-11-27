@@ -132,31 +132,49 @@
      <!-- SCRIPTS -->
      <script>
 document.getElementById('loginForm').addEventListener('submit', async function(e) {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault();
 
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-        try {
-        const response = await fetch('http://localhost:3000/auth/login', {
-                method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password }),
+    try {
+        const response = await fetch('http://localhost:3000/api/auth/login', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({ email, password }),
         });
 
         if (!response.ok) {
-            throw new Error('Failed to login. Please check your credentials.');
+            const errorText = await response.text();
+            console.error('Server error:', errorText);
+            alert(`Login failed: ${errorText}`);
+            return;
         }
 
-            const data = await response.json();
-        localStorage.setItem('token', data.token); // Save token to localStorage
-        alert('Login successful!');
-        window.location.href = './admin.html'; // Redirect to admin page
-        } catch (error) {
-        console.error('Login error:', error.message);
-        alert('Login failed. Please try again.');
+        const data = await response.json();
+
+        // Store the token in local storage
+        localStorage.setItem('token', data.token);
+
+        // Check the user's role and redirect accordingly
+        if (data.role === 'admin') {
+            window.location.href = './admin.html';
+        } else if (data.role === 'patient') {
+            window.location.href = './patient.html';
+        } else if (data.role === 'pcp') {
+            window.location.href = './pcp.html';
+        } else if (data.role === 'specialist') {
+            window.location.href = './specialist.html';
+        } else {
+            alert('Unknown user role. Please contact support.');
         }
-    });
+    } catch (error) {
+        console.error('Network or parsing error:', error);
+        alert('An unexpected error occurred. Please try again.');
+    }
+});
 
           </script>
           
