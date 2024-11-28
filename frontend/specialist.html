@@ -213,8 +213,47 @@ a.smoothScroll:hover, .appointment-btn:hover {
         </div>
     </div>
 
-    <!-- SCRIPTS -->
  <!-- SCRIPTS -->
+ <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const referralList = document.getElementById('referral-list');
+    const specialistId = 2;
+
+    // Fetch referrals for the specialist
+    fetch(`http://localhost:3000/api/referrals/${specialistId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(referrals => {
+            // Check if referrals is an array
+            if (Array.isArray(referrals)) {
+                // Loop through the referrals and create a card for each one
+                referrals.forEach(referral => {
+                    const card = document.createElement('div');
+                    card.classList.add('referral-card');
+                    card.innerHTML = `
+                        <h4>Referral ID: ${referral.id}</h4>
+                        <p><strong>Patient ID:</strong> ${referral.patient_id}</p>
+                        <p><strong>Specialist ID:</strong> ${referral.specialist_id}</p>
+                        <p><strong>Reason:</strong> ${referral.reason}</p>
+                    `;
+                    referralList.appendChild(card);
+                });
+            } else {
+                console.error("Fetched data is not an array.");
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching referrals:', error);
+        });
+});
+
+</script>
+
+ </script>
  <script src="js/jquery.js"></script>
  <script src="js/bootstrap.min.js"></script>
  <script src="js/jquery.sticky.js"></script>

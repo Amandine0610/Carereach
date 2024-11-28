@@ -199,11 +199,33 @@ a.smoothScroll:hover, .appointment-btn:hover {
             </section>
 
             <!-- Referrals Section -->
-            <section id="referrals">
-                <h3>Referrals</h3>
-                <button onclick="generateReferral()">Create Referral</button>
-                <div id="referral-output"></div>
-            </section>
+<section id="referrals">
+    <h3>Referrals</h3>
+<!-- Button to create referral -->
+<button id="createReferralBtn">Create Referral</button>
+
+<!-- Referral Form Card (Initially Hidden) -->
+<div id="referralFormCard" style="display: none; margin-top: 20px;">
+    <div style="border: 1px solid #e9ecef; border-radius: 5px; padding: 20px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); background-color: #f8f9fa;">
+        <h4>Create a Referral</h4>
+        <form id="referralForm">
+            <label for="patientId">Patient ID:</label>
+            <input type="number" id="patientId" name="patientId" required style="display: block; width: 100%; margin-bottom: 10px;">
+            
+            <label for="specialistId">Specialist ID:</label>
+            <input type="number" id="specialistId" name="specialistId" required style="display: block; width: 100%; margin-bottom: 10px;">
+            
+            <label for="reason">Reason for Referral:</label>
+            <textarea id="reason" name="reason" required style="display: block; width: 100%; margin-bottom: 10px;"></textarea>
+            
+            <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Submit Referral</button>
+        </form>
+    </div>
+</div>
+
+    <!-- Response Message -->
+    <div id="responseMessage"></div>
+</section>
 
             <!-- Reports Section -->
             <section id="reports">
@@ -220,6 +242,50 @@ a.smoothScroll:hover, .appointment-btn:hover {
     </footer>
 
     <!-- SCRIPTS -->
+     <script>
+        // Select elements
+const createReferralBtn = document.getElementById("createReferralBtn");
+const referralFormCard = document.getElementById("referralFormCard");
+const referralForm = document.getElementById("referralForm");
+const responseMessage = document.getElementById("responseMessage");
+
+// Toggle the visibility of the referral form card
+createReferralBtn.addEventListener("click", () => {
+    referralFormCard.style.display = referralFormCard.style.display === "none" ? "block" : "none";
+});
+
+// Handle form submission
+referralForm.addEventListener("submit", async (event) => {
+    event.preventDefault(); // Prevent default form submission
+
+    // Gather form data
+    const formData = {
+        patientId: document.getElementById("patientId").value,
+        specialistId: document.getElementById("specialistId").value,
+        reason: document.getElementById("reason").value,
+    };
+
+    try {
+        // Send data to the server (adjust URL to match your API endpoint)
+        const response = await fetch("http://localhost:3000/api/referrals/create", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            responseMessage.innerHTML = `<p style="color: green;">Referral created successfully!</p>`;
+            referralForm.reset(); // Clear the form
+        } else {
+            responseMessage.innerHTML = `<p style="color: red;">Failed to create referral. Error: ${response.statusText}</p>`;
+        }
+    } catch (error) {
+        responseMessage.innerHTML = `<p style="color: red;">An error occurred: ${error.message}</p>`;
+    }
+});
+
+     </script>
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.sticky.js"></script>

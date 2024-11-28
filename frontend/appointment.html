@@ -137,7 +137,7 @@
                   
                         </select>
                    </div>
-                    <button type="submit" class="btn btn-primary btn-block" style="background-color:darkgray;color: black;" onclick="">Submit Appointment</button>
+                    <button type="submit" class="btn btn-primary btn-block" style="background-color:darkgray;color: black;" id="submitButton">Submit Appointment</button>
                 </form>
                 <!-- Modal Structure for Success -->
 <div id="success-modal" class="modal">
@@ -192,51 +192,47 @@
         }
     }
 
-    // Add event listener for appointment form submission
-    document.getElementById('appointment-form').addEventListener('submit', async (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
+    document.getElementById('appointment-form').addEventListener('submit', async (event) => {
+    event.preventDefault(); // Prevent default form submission
 
-        const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+    // Collect form values
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const appointmentDate = document.getElementById('appointmentDate').value;
+    const appointmentTime = document.getElementById('appointmentTime').value;
+    const department = document.getElementById('department').value;
 
-        if (!token) {
-            alert('You need to log in before scheduling an appointment.');
-            return;
-        }
+    try {
+        const response = await fetch('/api/appointments/submit-appointment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                phone,
+                appointmentDate,
+                appointmentTime,
+                department
+            })
+        });
 
-        // Gather appointment data from the form
-        const appointmentData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            appointment_date: document.getElementById('appointment_date').value,
-            appointment_time: document.getElementById('appointment_time').value,
-            department: document.getElementById('department').value
-        };
-
-        try {
-            // Send the appointment data to the server
-            const response = await fetch('http://localhost:3000/appointments/submit-appointment', {  
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}` 
-                },
-                body: JSON.stringify(appointmentData)
-            });
-
-            // Handle errors if the server response is not OK
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(errorText);
-            }
-
-            const result = await response.json();
+        const data = await response.json();
+        
+        if (response.ok) {
+            // Success handling
             alert('Appointment scheduled successfully!');
-            console.log('Appointment scheduled:', result);
-        } catch (error) {
-            console.error('Error scheduling appointment:', error);
-            alert(error.message || 'Booking failed. Please try again.');
+        } else {
+            // Error handling
+            alert(data.error || 'Error scheduling appointment');
         }
-    });
+    } catch (error) {
+        console.error('Scheduling error:', error);
+        alert('Failed to schedule appointment');
+    }
+});
 </script>
      <script src="js/jquery.js"></script>
      <script src="js/bootstrap.min.js"></script>

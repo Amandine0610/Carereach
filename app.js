@@ -20,6 +20,8 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const appointmentRoutes = require('./routes/appointmentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const referralRoute = require('./routes/referralRoute');
+const pcpRoutes = require('./routes/pcpRoutes');
 
 // Import middleware
 const { authenticateJWT, authorize } = require('./middleware/authMiddleware');
@@ -47,9 +49,10 @@ app.use(session({
 // Route setup with middleware
 app.use('/api/auth', authRoutes);                     // Authentication routes
 app.use('/admin', authenticateJWT, adminRoutes);      // Protected admin routes
-app.use('/appointments', authenticateJWT, appointmentRoutes); // Protected appointment routes
+app.use('/api/appointments', authenticateJWT, appointmentRoutes); // Protected appointment routes
 app.use('/users', authenticateJWT, userRoutes);       // Protected user routes
-
+app.use('/api/referrals', referralRoute);
+app.use('/api/pcp',pcpRoutes)
 // Route for submitting appointments
 app.post('/appointments/create', authenticateJWT, async (req, res) => {
     const {  name, email, phone, appointmentDate, appointmentTime, department, userId } = req.body;
